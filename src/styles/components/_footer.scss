@@ -1,0 +1,81 @@
+.footer {
+    background-color: lighten($background, 10%);
+    height: 15rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: flex-end;
+    margin-top:auto; 
+}
+
+.footer-wrapper {
+    background-color: lighten($background, 10%);
+}
+
+.footer__logo {
+    display: flex;
+    cursor: default;
+}
+
+.footer__logo--title {
+    margin: 0;
+    color: $letter-color;
+    font-weight: 500;
+}
+
+.footer__logo--accents {
+    font-weight: 300;
+    color:$accents;
+    margin: 0;
+}
+
+.copyright {
+    margin: 3rem 3.5rem 1rem 3.5rem;
+    font-size: 1.2rem;
+}
+
+.credits {
+    margin: 0rem 3.5rem;
+    font-size: 1.2rem;
+}
+
+.credits > a:visited{
+    color: $letter-color
+}
+
+.copyright > a:visited{
+    color: $letter-color
+}
+
+.footer__column {
+    margin-top: 3rem;
+}
+
+.footer__first-column {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer__second-column {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.second-column__links {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.footer__nav-link {
+    color: $letter-color;
+    margin: 0.3rem 1rem 0.3rem 0rem;
+    text-decoration: none;
+    font-size: 1.6rem;
+}
+
+.footer__divider {
+    width: 100%;
+}

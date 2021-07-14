@@ -1,0 +1,48 @@
+@import '../base/settings';
+
+.header {
+    background-color: lighten($background, 10%);
+    height: 7rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-wrapper {
+    background-color: lighten($background, 10%);
+}
+
+.header__logo-link {
+    display: flex;
+    text-decoration: none;
+}
+
+.header__title {
+    margin: 0;
+    color: $letter-color;
+    font-size: 4rem;
+    font-weight: 500;
+}
+
+.header__title--accent {
+    font-weight: 300;
+    color:$accents;
+}
+
+.nav-link {
+    color: $letter-color;
+    margin: 0px 1rem;
+    text-decoration: none;
+    font-size: 1.8rem;
+}
+
+.is-active {
+    font-weight: bold;
+    color: $accents;
+}
+
+.burger-menu {
+    background-color: red;
+    width: 10px;
+    height: 10px;
+}

@@ -1,0 +1,24 @@
+.next-five-days {
+    margin-bottom: 8rem;
+}
+
+.next-five-days__items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.next-five-days__title {
+    text-align: center;
+}
+
+@media (max-width: $desktop-breakpoint) {
+    .next-five-days {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .next-five-days__items {
+        justify-content: center;
+    }
+}

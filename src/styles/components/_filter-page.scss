@@ -1,0 +1,122 @@
+.filter-form {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5rem;
+}
+
+.filter-form > select {
+    padding: .5rem .5rem;
+}
+
+.filter-form > input {
+    padding: .5rem .5rem;
+}
+
+.filter-form > button {
+    padding: .5rem .5rem;
+    background-color: $accents;
+    border: none;
+    border-bottom: darken($accents, 20%) .3rem solid;
+}
+
+.filter-page__table {
+    border-collapse:collapse;
+    border-spacing:0;
+    width: 100%;
+    margin-top: 2rem;
+    background-color: lighten($background, 10%);
+}
+
+.filtered-item__tr:nth-child(even) {
+    background-color: lighten($background, 20%);
+}
+
+.filter-page__table td {
+    border: darken($accents, 10%) 2px solid;
+    font-family:Arial, sans-serif;
+    font-size:14px;
+    overflow:hidden;
+    padding:1rem 1.2rem;
+    word-break:normal;
+}
+
+.big-table {
+    width: 65%;
+}
+
+.medium-table {
+    width: 15%;
+}
+
+.small-table{
+    width: 10%;
+}
+
+.filter-page__table th {
+    border: darken($accents, 10%) 2px solid;
+    font-family:Arial, sans-serif;
+    font-size:14px;
+    font-weight:normal;
+    overflow:hidden;
+    padding:10px 5px;
+    word-break:normal;
+    background-color: darken($accents, 10%);
+}
+
+.filter-page__table--empty-format {
+    text-align: center;
+}
+
+.filter-page__filter-bar {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.filtered-item__link {
+    text-decoration: none;
+    color: $accents;
+    font-weight: bold;
+}
+
+.filtered-item__link:hover {
+    color: $letter-color;
+}
+
+.filter-input {
+    display: flex;
+}
+
+.filter-input > label {
+    margin-right: 1rem;
+    align-self: center;
+    font-size: 1.8rem;
+    margin: 0rem 1rem
+}
+
+@media (max-width: $desktop-breakpoint) {
+    .filter-form {
+        display: flex;
+        flex-direction: column;
+    }
+    .filter-input {
+    justify-content: space-between;
+    display: flex;
+    }
+    .filter-input > label {
+        margin-right: 1rem;
+    }
+
+    .filter-input > select {
+        box-sizing: border-box;
+        width: 20rem;
+    }
+    .filter-input > input {
+        box-sizing: border-box;
+        width: 20rem;
+    }
+    .is-optional {
+        display: none;
+    }
+}
+
+

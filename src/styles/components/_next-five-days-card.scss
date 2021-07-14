@@ -1,0 +1,56 @@
+.next-five-days__content {
+    border: darken($accents, 10%) 2px solid;
+    border-radius: 1rem;
+    max-width: 25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    font-size: 1.4rem;
+    box-shadow: (3px 3px 5px #000000);
+    background-color: lighten($background, 10%);
+}
+
+.next-five-days__card-title-wrapper {
+    width: 100%;
+    border-radius: .5rem .5rem 0rem 0rem;
+    background-color: darken($accents, 10%);
+}
+
+.next-five-days__item-name {
+    text-align: center;
+    margin: 0.8rem 0;
+    font-weight: bold;
+}
+
+.next-five-days__bonus-name {
+    text-align: center;
+    margin: 0.8rem 0;
+    font-weight: bold;
+    color: $accents;
+}
+
+.next-five-bonus-description {
+    text-align: center;
+    margin: 0.8rem 0;
+}
+
+.next-five-days__date {
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.next-five-days__image {
+    margin: 0px;
+}
+
+.divider {
+    margin: 0;
+    width: 100%;
+}
+
+@media (max-width: $desktop-breakpoint) {
+    .next-five-days__content {
+        margin-top: $m-size;
+    }
+}
