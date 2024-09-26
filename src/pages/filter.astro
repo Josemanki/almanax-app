@@ -1,0 +1,151 @@
+---
+import axios from 'axios';
+import Layout from '../layouts/Layout.astro';
+import type { GetMetaAlmanaxBonuses200ResponseInner } from '../types/types';
+
+const possibleBonuses = await axios
+  .get<GetMetaAlmanaxBonuses200ResponseInner[]>(
+    'https://api.dofusdu.de/dofus2/meta/en/almanax/bonuses'
+  )
+  .then(({ data }) => data.sort((a, b) => a.name.localeCompare(b.name)))
+  .catch((error) => console.error(error));
+---
+
+<Layout title="Almanax">
+  <div class="flex flex-1 flex-col text-white p-4">
+    <div class="flex flex-col items-center gap-4 sm:flex-row sm:gap-12">
+      <div class="flex-1">
+        <h1 class="text-2xl font-bold">Filter</h1>
+        <p class="text-sm">
+          Filter the days of the Almanax to find out about any upcoming bonuses
+          that you can take advantage of!
+        </p>
+      </div>
+      <form
+        id="filter-form"
+        class="flex flex-1 gap-4 justify-end items-end text-black"
+      >
+        <div>
+          <label
+            class="mr-1 block mb-2 text-sm font-medium text-white"
+            for="bonus">Bonus:</label
+          >
+          <select
+            id="bonus"
+            name="bonus"
+            class="border text-sm rounded-lg focus:ring-lime-600 focus:border-lime-600 block w-full p-2.5 bg-zinc-800 border-zinc-600 placeholder-zinc-400 text-white"
+          >
+            {
+              (possibleBonuses || []).map((bonus) => (
+                <option value={bonus.id}>{bonus.name}</option>
+              ))
+            }
+          </select>
+        </div>
+        <div>
+          <label
+            class="mr-1 block mb-2 text-sm font-medium text-white"
+            for="number-of-days">Days ahead:</label
+          >
+          <input
+            type="text"
+            value="14"
+            name="number-of-days"
+            id="number-of-days"
+            class="border text-sm rounded-lg block w-full p-2.5 bg-zinc-800 border-zinc-600 placeholder-zinc-400 text-white focus:ring-lime-600 focus:border-lime-600"
+          />
+        </div>
+        <button
+          class="bg-lime-600 hover:bg-lime-500 active:bg-lime-700 text-white p-2 rounded-lg"
+          type="submit"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+    <div
+      class="mt-8 overflow-x-scroll overflow-y-hidden rounded-lg border-2 border-lime-600"
+      id="found-bonuses"
+    >
+      <table class="w-full border-collapse border-2 border-lime-600">
+        <thead>
+          <tr class="bg-lime-600 text-white">
+            <th class="py-2 px-4 text-left font-normal">Date</th>
+            <th class="py-2 px-4 text-left font-normal">Item</th>
+            <th class="py-2 px-4 text-left font-normal">Amount</th>
+            <th class="py-2 px-4 text-left font-normal">Type</th>
+            <th class="py-2 px-4 text-left font-normal">Description</th>
+          </tr>
+        </thead>
+        <tbody id="table-body" class="bg-zinc-800 text-white">
+          <tr>
+            <td class="py-2 px-4 text-center" colspan="5"
+              >Nothing yet added! You can provide a bonus and a range in order
+              to filter.</td
+            >
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import axios from 'axios';
+  import type { AlmanaxEntry } from '../types/types';
+  import { format } from 'date-fns';
+
+  const generateTable = (data: AlmanaxEntry[]) => {
+    if (data.length === 0) {
+      return `
+      <tr>
+        <td class="p-2 border-r-2 border-b-2 border-lime-600 text-center" colspan="5">No event of this nature is happening in your selected range!</td>
+      </tr>
+    `;
+    }
+
+    return data
+      .map((item) => {
+        const date = format(new Date(item.date), 'dd/MM/yyyy');
+        const itemName = item.tribute.item.name;
+        const amount = item.tribute.quantity;
+        const type = item?.bonus?.type?.name || 'Unknown';
+        const description = item.bonus.description;
+
+        return `
+      <tr>
+        <td class="px-2 py-1 border-r-2 border-b-2 border-lime-600">${date}</td>
+        <td class="px-2 py-1 border-r-2 border-b-2 border-lime-600 text-lime-600 font-semibold">${itemName}</td>
+        <td class="px-2 py-1 border-r-2 border-b-2 border-lime-600">${amount}</td>
+        <td class="px-2 py-1 border-r-2 border-b-2 border-lime-600">${type}</td>
+        <td class="px-2 py-1 border-r-2 border-b-2 border-lime-600">${description}</td>
+      </tr>
+    `;
+      })
+      .join('');
+  };
+
+  const filterForm = document.querySelector('#filter-form');
+  const bonusSelect = document.querySelector<HTMLSelectElement>('#bonus');
+  const numberOfDays =
+    document.querySelector<HTMLInputElement>('#number-of-days');
+  const tableBody = document.querySelector('#table-body');
+
+  filterForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const bonusType = bonusSelect?.value;
+    const daysAhead = numberOfDays?.value;
+
+    const data = await axios
+      .get(
+        `https://api.dofusdu.de/dofus2/en/almanax?filter%5Bbonus_type%5D=${bonusType}&range%5Bsize%5D=${daysAhead}&timezone=Europe%2FParis`
+      )
+      .then((response) => {
+        return response.data;
+      });
+
+    if (tableBody) {
+      tableBody.innerHTML = generateTable(data);
+    }
+  });
+</script>
